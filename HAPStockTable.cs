@@ -16,10 +16,9 @@ namespace ConsoleHAPScraper
     {
         public int Id { get; set; }
         public Nullable<System.DateTime> Time_Scraped { get; set; }
-        public string Last_Price { get; set; }
         public string Stock_Symbol { get; set; }
+        public string Last_Price { get; set; }
         public string Change { get; set; }
         public string Percent_Change { get; set; }
-
     }
 }

@@ -30,10 +30,9 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Time_Scraped" Type="DateTime" Precision="7" />
           <Property Name="Stock_Symbol" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Last_Price" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Change" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Percent_Change" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Shares" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Last_Price" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityContainer Name="HAPStockTableEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="HAPStockTables" EntityType="Self.HAPStockTable" />
