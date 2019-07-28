@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleHAPScraper
 {
-    class Scrape
+    class Scrape : DatabaseControl
     {
         static void Main(string[] args)
         {
@@ -18,52 +18,33 @@ namespace ConsoleHAPScraper
             HtmlWeb webNav = new HtmlWeb();
             HtmlDocument document = webNav.Load(nasdaqUrl);
 
-            var dataTable = document.DocumentNode.SelectNodes("//*[@id='_up']/table/tr").ToList();
+            HtmlNodeCollection dataTable = document.DocumentNode.SelectNodes("//*[@id='_up']/table/tr");
+
+
+            HAPStock stock;
+            List<HAPStock> stockData = new List<HAPStock>();
+
 
             foreach (var tableRow in dataTable)
             {
-                Console.WriteLine(tableRow.InnerText);
+                DateTime timeScraped = DateTime.Now;
+                string stockSymbol = tableRow.SelectSingleNode("td/h3/a").InnerText;
+                string lastPrice = tableRow.SelectSingleNode("td[4]").InnerText.Replace(" ", string.Empty);
+                string change = tableRow.SelectSingleNode("td[5]/span").InnerText;
+                string percentChange = tableRow.SelectSingleNode("td[7]").InnerText;
 
-                string stockSymbol = tableRow.SelectSingleNode("//*[@id='_up']/table/thead/tr/th[1]").InnerText;
-                string lastPrice = tableRow.SelectSingleNode("//*[@id='_up']/table/thead/tr/th[3]").InnerText;
-                string change = tableRow.SelectSingleNode("//*[@id='_up']/table/thead/tr/th[4]").InnerText;
-                string percentChange = tableRow.SelectSingleNode("//*[@id='_up']/table/thead/tr/th[6]").InnerText;
 
-                Console.WriteLine(DateTime.Now);
-                Console.WriteLine(stockSymbol);
-                Console.WriteLine(lastPrice);
-                Console.WriteLine(change);
-                Console.WriteLine(percentChange);
+                stock = new HAPStock(timeScraped, stockSymbol, lastPrice, change, percentChange);
+
+                stockData.Add(stock);
+                InsertScrapeToDatabase(stock);
+
             }
             
             int totalStocks = dataTable.Count;
             Console.WriteLine("Total stocks: {0}", totalStocks);
 
-            List<DateTime> timeScraped = new List<DateTime>();
-            List<string> stockSymbols = new List<string>();
-            List<string> lastPrices = new List<string>();
-            List<string> changes = new List<string>();
-            List<string> percentChanges = new List<string>();
-
-
-
-            for (int index =  0; index < totalStocks; index++)
-            {
-
-
-
-
-            }
-
-
-
-
-
-
-
-            Console.ReadKey();
-
-
+            
         }
     }
 }
