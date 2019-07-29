@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace ConsoleHAPScraper
 {
@@ -24,25 +25,44 @@ namespace ConsoleHAPScraper
             HAPStock stock;
             List<HAPStock> stockData = new List<HAPStock>();
 
+            int totalStocks = dataTable.Count;
 
             foreach (var tableRow in dataTable)
             {
                 DateTime timeScraped = DateTime.Now;
                 string stockSymbol = tableRow.SelectSingleNode("td/h3/a").InnerText;
-                string lastPrice = tableRow.SelectSingleNode("td[4]").InnerText.Replace(" ", string.Empty);
-                string change = tableRow.SelectSingleNode("td[5]/span").InnerText;
-                string percentChange = tableRow.SelectSingleNode("td[7]").InnerText;
+                string lastPrice = tableRow.SelectSingleNode("td[4]").InnerText.Replace("&nbsp;", string.Empty);
+                string InitChange = tableRow.SelectSingleNode("td[5]/span").InnerText.Replace("&nbsp;", "").Replace(" ", "").Replace("&#9650;", " ");  
+
+                int changeLength = InitChange.Length;
+
+                int cutString = 4;
+                string change = InitChange.Substring(0, cutString).Trim();
+                string changePercent = InitChange.Substring(cutString).Trim();
 
 
-                stock = new HAPStock(timeScraped, stockSymbol, lastPrice, change, percentChange);
+
+                /*string stringChange = "";
+                if (changeNode == null)
+                    stringChange = "no data found";
+                else = ClarifyNode(changeNode);*/
+
+
+                    stock = new HAPStock(timeScraped, stockSymbol, lastPrice, change, changePercent);
 
                 stockData.Add(stock);
                 InsertScrapeToDatabase(stock);
 
             }
+
+            /*public static string ClarifyNode (HtmlNode nodeText)
+            {
+                string change = nodeText.InnerText;
+                Match changeNodeSpecialCharacters = Regex.Match(change, @"(&nbsp;&#9650;");
+            }
             
-            int totalStocks = dataTable.Count;
-            Console.WriteLine("Total stocks: {0}", totalStocks);
+            
+            Console.WriteLine("Total stocks: {0}", totalStocks);*/
 
             
         }

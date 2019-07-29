@@ -62,50 +62,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseControl.cs" />
-    <Compile Include="HAPStockModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HAPStockModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="HAPStockModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HAPStockModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="HAPStockModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HAPStockModel.edmx</DependentUpon>
-    </Compile>
     <Compile Include="HAPStockSchema.cs" />
-    <Compile Include="HAPStockTable.cs">
-      <DependentUpon>HAPStockModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="HAPStockModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>HAPStockModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="HAPStockModel.edmx.diagram">
-      <DependentUpon>HAPStockModel.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="HAPStockModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>HAPStockModel.Context.cs</LastGenOutput>
-      <DependentUpon>HAPStockModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="HAPStockModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HAPStockModel.edmx</DependentUpon>
-      <LastGenOutput>HAPStockModel.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

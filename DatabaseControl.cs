@@ -21,10 +21,10 @@ namespace ConsoleHAPScraper
         {
             string lastScrape = @"IF EXISTS(SELECT* FROM HAPStockTable WHERE Stock Symbol = @stock_symbol)
                                     UPDATE HAPStockTable
-                                    SET Time_Scraped=@time_scraped, Last_Price = @last_price, Change = @Change, Percent_Change = @change_percent
+                                    SET Time_Scraped=@time_scraped, Last_Price = @last_price, Change = @change, Change_Percent = @change_percent;
                                     WHERE Stock_Symbol = @stock_symbol
                                 ELSE 
-                                    INSERT INTO HAPStockTable VALUES (@time_scraped, @stock_symbol, @last_price, @change, @percent_change);";
+                                    INSERT INTO HAPStockTable VALUES (@time_scraped, @stock_symbol, @last_price, @change, @change_percent);";
 
             using (SqlConnection db = new SqlConnection(_connection))
             {
@@ -42,7 +42,8 @@ namespace ConsoleHAPScraper
                         command.Parameters.AddWithValue("@stock_symbol", stock.StockSymbol);
                         command.Parameters.AddWithValue("@last_price", stock.LastPrice);
                         command.Parameters.AddWithValue("@change", stock.Change);
-                        command.Parameters.AddWithValue("@change_percent", stock.PercentChange);
+                        command.Parameters.AddWithValue("@change_percent", stock.ChangePercent);
+
                         command.ExecuteNonQuery();
                     }
                 }
@@ -64,7 +65,7 @@ namespace ConsoleHAPScraper
 
             using (SqlConnection db = new SqlConnection(_connection))
             {
-                string insertToTable = "INSERT INTO dbo.HAPStockTable (Time_Scraped, Stock_Symbol, Last_Price, Change, Percent_Change) VALUES (@time_scraped, @stock_symbol, @last_price, @change, @percent_change);";
+                string insertToTable = "INSERT INTO dbo.HAPStockTable (Time_Scraped, Stock_Symbol, Last_Price, Change, Change_Percent) VALUES (@time_scraped, @stock_symbol, @last_price, @change, @change_percent);";
                 {
                     db.Open();
 
@@ -80,7 +81,7 @@ namespace ConsoleHAPScraper
                             dataToTable.Parameters.AddWithValue("@stock_symbol", stock.StockSymbol);
                             dataToTable.Parameters.AddWithValue("@last_price", stock.LastPrice);
                             dataToTable.Parameters.AddWithValue("@change", stock.Change);
-                            dataToTable.Parameters.AddWithValue("@percent_change", stock.PercentChange);
+                            dataToTable.Parameters.AddWithValue("@change_percent", stock.ChangePercent);
 
                             dataToTable.ExecuteNonQuery();
                         }
